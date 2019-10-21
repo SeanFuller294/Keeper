@@ -31,10 +31,12 @@ namespace Keeper.Repositories
       string sql = "DELETE FROM vaultkeeps WHERE vaultId = @vaultId AND keepId = @keepId";
       _db.Execute(sql, vk);
     }
-    internal object Get(int vaultId)
+    internal object Get(int vaultId, string userId)
     {
-      string sql = "SELECT * FROM vaultkeeps WHERE vaultId = @vaultId";
-      return _db.Query(sql, new { vaultId });
+      string sql = @"SELECT * FROM vaultkeeps vk
+INNER JOIN keeps k ON k.id = vk.keepId
+WHERE(vaultId = @vaultId AND vk.userId = @userId)";
+      return _db.Query(sql, new { vaultId, userId });
     }
   }
 }

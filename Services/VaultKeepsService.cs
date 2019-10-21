@@ -26,9 +26,9 @@ namespace Keeper.Services
       return "Success";
     }
 
-    internal object Get(int id)
+    internal object Get(int id, string userId)
     {
-      return _repo.Get(id);
+      return _repo.Get(id, userId);
     }
   }
 }

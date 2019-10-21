@@ -34,11 +34,12 @@ namespace Keeper.Controllers
 
     [Authorize]
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<VaultKeep>> Get(int id)
+    public ActionResult<IEnumerable<Keep>> Get(int id)
     {
       try
       {
-        return Ok(_vks.Get(id));
+        string userId = HttpContext.User.FindFirstValue("id");
+        return Ok(_vks.Get(id, userId));
       }
       catch (Exception e)
       {

@@ -93,12 +93,20 @@ export default new Vuex.Store({
       })
     },
     async addKeepToVault({ commit, dispatch }, payload) {
+      // debugger
       let newVK = {
         vaultId: payload.vaultId,
         keepId: payload.keepId,
         userId: ""
       }
+      let keep = await api.get("keeps/" + payload.keepId).then(res => {
+        res.data.hasBeenKept++
+        api.put("keeps/" + payload.keepId, res.data)
+      })
+
       let data = await api.post("vaultkeeps", newVK)
+      let steve = await api.get("keeps");
+
 
     },
     async GetVaults({ commit }) {

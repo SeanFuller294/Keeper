@@ -29,7 +29,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >Keep</button>
+            >Keep {{keep.hasBeenKept}}</button>
             <div class="dropdown-menu">
               <a
                 class="dropdown-item"
@@ -62,7 +62,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >Keep</button>
+            >Keep {{keep.hasBeenKept}}</button>
             <div class="dropdown-menu">
               <a
                 class="dropdown-item"

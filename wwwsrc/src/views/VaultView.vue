@@ -3,7 +3,7 @@
     <button class="btn btn-primary" @click="goHome">Go Home</button>
     <h1>{{this.vault.name}}</h1>
     <div class="row">
-      <div class="col-3" v-for="keep in this.keeps" :key="keep.id">
+      <div class="col-3" v-for="keep in this.keeps">
         <img :src="keep.img" />
         <br />
         {{keep.name}}

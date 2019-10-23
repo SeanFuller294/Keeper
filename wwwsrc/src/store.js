@@ -34,10 +34,13 @@ export default new Vuex.Store({
       state.keeps = payload.data;
     },
     setOneKeep(state, payload) {
-      state.oneKeep = payload.data
+      state.oneKeep = payload.data;
     },
     setVaults(state, payload) {
       state.vaults = payload.data;
+    },
+    setOneVault(state, payload) {
+      state.oneVault = payload.data;
     }
   },
   actions: {
@@ -70,7 +73,7 @@ export default new Vuex.Store({
         let success = await AuthService.Logout()
         if (!success) { }
         commit('resetState')
-        router.push({ name: "login" })
+        //router.push({ name: "login" })
       } catch (e) {
         console.warn(e.message)
       }
@@ -84,13 +87,32 @@ export default new Vuex.Store({
       commit("setOneKeep", data)
       return data.data
     },
+    async getKeepsByVault({ commit, dispatch }, payload) {
+      let data = await api.get("vaultKeeps/" + payload).then(res => {
+        commit("setKeeps", res)
+      })
+    },
+    async addKeepToVault({ commit, dispatch }, payload) {
+      let newVK = {
+        vaultId: payload.vaultId,
+        keepId: payload.keepId,
+        userId: ""
+      }
+      let data = await api.post("vaultkeeps", newVK)
+
+    },
     async GetVaults({ commit }) {
       try {
-        let data = await api.get("vaults", { withCredentials: true })
+        let data = await api.get("vaults")
         commit("setVaults", data)
       } catch (error) {
         console.error(error);
       }
+    },
+    async getOneVault({ commit }, payload) {
+      let data = await api.get("vaults/" + payload)
+      commit("setOneVault", data)
+      router.push("/vault")
     },
     async viewKeep({ commit, dispatch }, payload) {
       let d = await api.put("keeps/" + payload.id, payload)
@@ -108,7 +130,6 @@ export default new Vuex.Store({
         }
       }
       commit("setOneKeep", newKeep)
-      dispatch("GetKeeps")
       router.push("/keep")
     }
   }

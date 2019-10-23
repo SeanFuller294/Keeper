@@ -39,7 +39,7 @@ USE keeper2;
 -- );
 
 -- ALTER TABLE keeps CHANGE COLUMN `keeps` `hasBeenKept` INT DEFAULT 0;
--- SELECT * FROM keeps;
+-- SELECT * FROM vaultkeeps;
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,

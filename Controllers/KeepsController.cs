@@ -43,7 +43,6 @@ namespace Keeper.Controllers
         return BadRequest(e.Message);
       }
     }
-    [Authorize]
     [HttpGet("{id}")]
     public ActionResult<Keep> Get(int id)
     {
@@ -71,7 +70,7 @@ namespace Keeper.Controllers
         return BadRequest(e.Message);
       }
     }
-    [Authorize]
+
     [HttpPut("{id}")]
     public ActionResult<Keep> Edit([FromBody] Keep newKeep, int id)
     {

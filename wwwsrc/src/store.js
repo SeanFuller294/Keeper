@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import Axios from 'axios'
 import router from './router'
 import AuthService from './AuthService'
@@ -16,7 +16,11 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    keeps: [],
+    vaults: [],
+    oneKeep: {},
+    oneVault: {}
   },
   mutations: {
     setUser(state, user) {
@@ -25,6 +29,15 @@ export default new Vuex.Store({
     resetState(state) {
       //clear the entire state object of user data
       state.user = {}
+    },
+    setKeeps(state, payload) {
+      state.keeps = payload.data;
+    },
+    setOneKeep(state, payload) {
+      state.oneKeep = payload.data
+    },
+    setVaults(state, payload) {
+      state.vaults = payload.data;
     }
   },
   actions: {
@@ -36,6 +49,12 @@ export default new Vuex.Store({
       } catch (e) {
         console.warn(e.message)
       }
+    },
+    async GetAuth({ commit, dispatch }) {
+      let data = await AuthService.Authenticate()
+      console.log(data);
+
+      return data
     },
     async login({ commit, dispatch }, creds) {
       try {
@@ -55,6 +74,42 @@ export default new Vuex.Store({
       } catch (e) {
         console.warn(e.message)
       }
+    },
+    async GetKeeps({ commit }) {
+      let data = await api.get("keeps")
+      commit("setKeeps", data)
+    },
+    async getOneKeep({ commit }, payload) {
+      let data = await api.get("keeps/" + payload)
+      commit("setOneKeep", data)
+      return data.data
+    },
+    async GetVaults({ commit }) {
+      try {
+        let data = await api.get("vaults", { withCredentials: true })
+        commit("setVaults", data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async viewKeep({ commit, dispatch }, payload) {
+      let d = await api.put("keeps/" + payload.id, payload)
+      let newKeep = {
+        data: {
+          name: payload.name,
+          description: payload.description,
+          hasBeenKept: payload.hasBeenKept,
+          id: payload.id,
+          img: payload.img,
+          isPrivate: payload.isPrivate,
+          shares: payload.shares,
+          userId: payload.userId,
+          views: payload.views
+        }
+      }
+      commit("setOneKeep", newKeep)
+      dispatch("GetKeeps")
+      router.push("/keep")
     }
   }
 })

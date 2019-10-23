@@ -36,6 +36,7 @@ namespace Keepr
         .AddCookie(options =>
         {
           options.LoginPath = "/Account/Login";
+          options.CookieSecure = Microsoft.AspNetCore.Http.CookieSecurePolicy.None;
           options.Events.OnRedirectToLogin = (context) =>
                   {
                     context.Response.StatusCode = 401;

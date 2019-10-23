@@ -30,13 +30,16 @@ USE keeper2;
 --     isPrivate TINYINT,
 --     views INT DEFAULT 0,
 --     shares INT DEFAULT 0,
---     keeps INT DEFAULT 0,
+--     hasBeenKept INT DEFAULT 0,
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
+
+-- ALTER TABLE keeps CHANGE COLUMN `keeps` `hasBeenKept` INT DEFAULT 0;
+-- SELECT * FROM keeps;
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,

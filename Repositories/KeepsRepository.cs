@@ -28,7 +28,7 @@ namespace Keeper.Repositories
 
     internal void Edit(Keep newKeep)
     {
-      string sql = "UPDATE keeps SET name = @Name, description = @Description, img = @Img, isprivate = @IsPrivate WHERE id = @id";
+      string sql = "UPDATE keeps SET name = @name, hasBeenKept = @hasBeenKept, shares = @shares, views = @views, description = @Description, img = @Img, isprivate = @IsPrivate WHERE id = @id";
       _db.Execute(sql, newKeep);
     }
 

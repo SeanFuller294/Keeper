@@ -22,7 +22,7 @@ namespace Keeper.Repositories
 
     internal VaultKeep GetOne(int id)
     {
-      string sql = "SELECT * FROM vaultkeeps WHERE id=@id";
+      string sql = "SELECT * FROM vaultkeeps WHERE id = @id";
       return _db.QueryFirstOrDefault(sql, new { id });
     }
 

@@ -35,6 +35,11 @@
                 }
             };
         },
+        computed:{
+            getKeeps(){
+                this.$store.dispatch("GetKeeps")
+            }
+        },
         beforeCreate(){
             if(this.$store.state.user.id){
                 this.$router.push({name: "home"})

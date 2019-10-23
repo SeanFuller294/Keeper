@@ -31,19 +31,22 @@ namespace Vaulter.Controllers
     //     return BadRequest(e.Message);
     //   }
     // }
+
+    [Authorize]
     [HttpGet]
     public ActionResult<IEnumerable<Vault>> Get()
     {
       try
       {
-        return Ok(_vs.Get(HttpContext.User.FindFirstValue("Id")));
+        string userId = HttpContext.User.FindFirstValue("Id");
+        return Ok(_vs.Get(userId));
       }
       catch (Exception e)
       {
         return BadRequest(e.Message);
       }
     }
-
+    [Authorize]
     [HttpGet("{id}")]
     public ActionResult<Vault> GetById(int id)
     {

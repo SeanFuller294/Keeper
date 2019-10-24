@@ -15,7 +15,12 @@
     </div>
     <hr />
     <div class="row">
-      <div class="col-3" v-for="keep in this.keeps" v-if="keep.isPrivate == false" :key="keep.Id">
+      <div
+        class="col-3 mt-3 border"
+        v-for="keep in this.keeps"
+        v-if="keep.isPrivate == false"
+        :key="keep.Id"
+      >
         <img :src="keep.img" />
         <br />
         {{keep.name}}
@@ -42,7 +47,7 @@
         </div>
       </div>
       <div
-        class="col-3"
+        class="col-3 mt-3 border"
         v-for="keep in this.keeps"
         v-if="user.id == keep.userId && keep.isPrivate == true"
         :key="keep.Id"
@@ -75,8 +80,8 @@
         </div>
       </div>
     </div>
-    <div class="row" v-if="user.id">
-      <div class="col-12">
+    <div class="row justify-content-center" v-if="user.id">
+      <div class="col-4">
         <form @submit="postAKeep">
           <div class="form-group">
             <input class="form-control" id="name" placeholder="Name" v-model="name" required />
@@ -99,6 +104,27 @@
           </div>
           <button type="submit" class="btn btn-primary">Post Keep</button>
         </form>
+        <form @submit="createVault">
+          <div class="form-group">
+            <input
+              class="form-control"
+              id="vaultName"
+              placeholder="Name"
+              v-model="vaultName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              id="vaultDescription"
+              placeholder="Description"
+              v-model="vaultDescription"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Create Vault</button>
+        </form>
       </div>
     </div>
   </div>
@@ -112,7 +138,9 @@ export default {
       name: "",
       description: "",
       img: "",
-      isPrivate: false
+      isPrivate: false,
+      vaultName: "",
+      vaultDescription: ""
     };
   },
   computed: {
@@ -127,7 +155,6 @@ export default {
     }
   },
   mounted() {
-    // this.$store.dispatch("GetAuth");
     this.$store.dispatch("GetKeeps");
     this.$store.dispatch("GetVaults");
   },
@@ -142,9 +169,7 @@ export default {
         img: this.img,
         isPrivate: this.isPrivate
       };
-      console.log(newKeep);
-      debugger;
-      //this.$store.dispatch("postKeep", this.newKeep);
+      this.$store.dispatch("postKeep", newKeep);
     },
     viewKeep(keepId) {
       let keep = this.$store.dispatch("getOneKeep", keepId).then(res => {
@@ -157,6 +182,12 @@ export default {
     },
     addKeepToVault(vaultId, keepId) {
       this.$store.dispatch("addKeepToVault", { vaultId, keepId });
+    },
+    createVault() {
+      this.$store.dispatch("createVault", {
+        name: this.vaultName,
+        description: this.vaultDescription
+      });
     }
   }
 };

@@ -38,8 +38,9 @@ USE keeper2;
 --     PRIMARY KEY (id)
 -- );
 
--- ALTER TABLE keeps CHANGE COLUMN `keeps` `hasBeenKept` INT DEFAULT 0;
--- SELECT * FROM vaultkeeps;
+
+
+-- SELECT * FROM keeps;
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,

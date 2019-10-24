@@ -93,7 +93,6 @@ export default new Vuex.Store({
       })
     },
     async addKeepToVault({ commit, dispatch }, payload) {
-      // debugger
       let newVK = {
         vaultId: payload.vaultId,
         keepId: payload.keepId,
@@ -122,6 +121,16 @@ export default new Vuex.Store({
       commit("setOneVault", data)
       router.push("/vault")
     },
+    async createVault({ commit, dispatch }, payload) {
+      let v = api.post("vaults", payload)
+      await api.get("vaults")
+      location.reload()
+    },
+    async deleteVault({ commit, dispatch }, payload) {
+      await api.delete("vaults/" + payload)
+      let vaults = await api.get("vaults")
+      commit("setVaults", vaults)
+    },
     async viewKeep({ commit, dispatch }, payload) {
       let d = await api.put("keeps/" + payload.id, payload)
       let newKeep = {
@@ -139,6 +148,19 @@ export default new Vuex.Store({
       }
       commit("setOneKeep", newKeep)
       router.push("/keep")
+    },
+    async postKeep({ commit, dispatch }, payload) {
+      await api.post("keeps", payload)
+      let keeps = await api.get("keeps")
+      commit("setKeeps", keeps)
+    },
+    async deleteKeep({ commit, dispatch }, payload) {
+      await api.delete("keeps/" + payload)
+      let keeps = await api.get("keeps")
+      commit("setKeeps", keeps)
+    },
+    async removeKeep({ commit, dispatch }, payload) {
+      await api.put("vaultKeeps/", payload)
     }
   }
 })

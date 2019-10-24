@@ -1,13 +1,17 @@
 <template>
   <div class="keepView container-fluid">
-    <div class="row">
-      <div class="col-3 offset-5">
-        <img :src="this.keep.img" />
+    <button class="btn btn-primary" @click="goHome">Go Home</button>
+    <div class="row justify-content-center">
+      <div class="col-12">
         {{this.keep.name}}
+        <br />
+        <img :src="this.keep.img" />
         <br />
         {{this.keep.description}}
         <br />
         Views: {{this.keep.views}}
+        Keeps: {{this.keep.hasBeenKept}}
+        <p @click="deleteKeep(keep.id)">❌</p>
       </div>
     </div>
   </div>
@@ -25,7 +29,15 @@ export default {
       return this.$store.state.oneKeep;
     }
   },
-  methods: {},
+  methods: {
+    goHome() {
+      this.$router.push({ name: "home" });
+    },
+    deleteKeep(keepId) {
+      this.$store.dispatch("deleteKeep", keepId);
+      this.$router.push({ name: "home" });
+    }
+  },
   components: {}
 };
 </script>
@@ -34,5 +46,8 @@ export default {
 <style scoped>
 img {
   height: 400px;
+}
+p {
+  cursor: pointer;
 }
 </style>

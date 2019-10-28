@@ -5,7 +5,7 @@
     <h1>{{this.vault.name}}</h1>
     <h3>{{this.vault.description}}</h3>
     <div class="row">
-      <div class="col-3" v-for="keep in this.keeps">
+      <div class="col-3 border" v-for="keep in this.keeps" id="keep">
         <img :src="keep.img" />
         <br />
         {{keep.name}}

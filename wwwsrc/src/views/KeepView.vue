@@ -2,7 +2,7 @@
   <div class="keepView container-fluid">
     <button class="btn btn-primary" @click="goHome">Go Home</button>
     <div class="row justify-content-center">
-      <div class="col-12">
+      <div class="col-6" id="keep">
         {{this.keep.name}}
         <br />
         <img :src="this.keep.img" />

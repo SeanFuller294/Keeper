@@ -1,6 +1,6 @@
 <template>
   <div class="home container-fluid">
-    <h1>Welcome Home {{user.username}}</h1>
+    <h1>{{this.message}} {{user.username}}</h1>
     <button v-if="user.id" @click="logout">logout</button>
     <router-link v-else :to="{name: 'login'}">Login</router-link>
     <div class="row">
@@ -14,13 +14,15 @@
       >{{vault.name}}</div>
     </div>
     <hr />
-    <div class="row">
+    <div class="row justify-content-around">
       <div
-        class="col-3 mt-3 border"
+        class="col-3 mt-3 border mx-2"
         v-for="keep in this.keeps"
         v-if="keep.isPrivate == false"
         :key="keep.Id"
+        id="keep"
       >
+        <br />
         <img :src="keep.img" />
         <br />
         {{keep.name}}
@@ -47,10 +49,11 @@
         </div>
       </div>
       <div
-        class="col-3 mt-3 border"
+        class="col-3 mt-3 border mx-2"
         v-for="keep in this.keeps"
         v-if="user.id == keep.userId && keep.isPrivate == true"
         :key="keep.Id"
+        id="keep"
       >
         👁️
         <br />
@@ -82,7 +85,7 @@
     </div>
     <div class="row justify-content-center" v-if="user.id">
       <div class="col-4">
-        <form @submit="postAKeep">
+        <form @submit="postAKeep" class="my-2">
           <div class="form-group">
             <input class="form-control" id="name" placeholder="Name" v-model="name" required />
           </div>
@@ -102,9 +105,9 @@
             <input type="checkbox" class="form-check-input" id="isPrivate" v-model="isPrivate" />
             <label class="form-check-label" for="isPrivate">Private</label>
           </div>
-          <button type="submit" class="btn btn-primary">Post Keep</button>
+          <button type="submit" class="btn btn-primary mb-4">Post Keep</button>
         </form>
-        <form @submit="createVault">
+        <form @submit="createVault" class="my-2">
           <div class="form-group">
             <input
               class="form-control"
@@ -140,7 +143,8 @@ export default {
       img: "",
       isPrivate: false,
       vaultName: "",
-      vaultDescription: ""
+      vaultDescription: "",
+      message: "Welcome Home"
     };
   },
   computed: {
@@ -157,10 +161,14 @@ export default {
   mounted() {
     this.$store.dispatch("GetKeeps");
     this.$store.dispatch("GetVaults");
+    if (this.$store.state.user.username == "Jim") {
+      this.message = "He's Dead";
+    }
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
+      this.message = "Welcome Home";
     },
     postAKeep() {
       let newKeep = {
@@ -194,7 +202,21 @@ export default {
 </script>
 <style>
 #VaultNames {
-  color: blue;
+  color: #e5f2c9;
   cursor: pointer;
+}
+body {
+  background-color: #1e1a1d;
+  color: #7f534b;
+}
+#keep {
+  background-color: #1f0318;
+  color: #ede3e4;
+}
+form {
+  color: #7f534b;
+}
+h1 {
+  color: #7f534b;
 }
 </style>

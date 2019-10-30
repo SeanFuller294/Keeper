@@ -27,8 +27,11 @@ export default new Vuex.Store({
       state.user = user
     },
     resetState(state) {
-      //clear the entire state object of user data
-      state.user = {}
+      state.user = {},
+        state.keeps = [],
+        state.vaults = [],
+        state.oneKeep = {},
+        state.oneVault = {}
     },
     setKeeps(state, payload) {
       state.keeps = payload.data;
@@ -73,7 +76,6 @@ export default new Vuex.Store({
         let success = await AuthService.Logout()
         if (!success) { }
         commit('resetState')
-        //router.push({ name: "login" })
       } catch (e) {
         console.warn(e.message)
       }

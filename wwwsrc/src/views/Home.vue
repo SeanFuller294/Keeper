@@ -27,7 +27,7 @@
         <br />
         {{keep.name}}
         <br />
-        <button class="btn btn-primary" @click="viewKeep(keep.id)">views {{keep.views}}</button>
+        <button class="btn btn-primary" @click="viewKeep(keep.id)">Views {{keep.views}}</button>
         <div class="dropdown">
           <div class="btn-group">
             <button
